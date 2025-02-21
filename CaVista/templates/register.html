@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication | Register</title>
+</head>
+<body>
+    
+    <h1>User Authentication / Register</h1>
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ registerform.as_p }}
+
+        <div id="provider-fields" style="display: none;">
+            {{ providerform.as_p }}
+        </div>
+        <div id="patient-fields" style="display: none;">
+            {{ patientform.as_p }}
+        </div>
+
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="{% url 'user_login' %}">Login Here</a></p>
+    </form>
+
+    <script>
+        const roleSelect = document.getElementById('id_role');
+        const providerFields = document.getElementById('provider-fields');
+        const patientFields = document.getElementById('patient-fields');
+
+        roleSelect.addEventListener('change', (e) => {
+
+            if (e.target.value == 'provider') {
+                providerFields.style.display = 'block';
+                patientFields.style.display = 'none';
+            } else if (e.target.value == 'patient') {
+                providerFields.style.display = 'none';
+                patientFields.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+</html>
